@@ -38,13 +38,13 @@ const HomeFeed = () => {
     });
   }   , []);
 
-
+  
     return (
       <Wrapper>
     <div>HomeFeed</div>
-    <WrapperTweet>
+   
     {homeFeedTweets === null ? <p>....</p> : (
-     status === "idle" && homeFeedTweets.tweetIds.map((tweet)=>{
+     status === "idle" && homeFeedTweets.tweetIds.map((tweet)=>{     
         return (
           <Tweet 
             key={tweet}
@@ -53,11 +53,13 @@ const HomeFeed = () => {
             name={homeFeedTweets.tweetsById[tweet].author.displayName}
             avatar={homeFeedTweets.tweetsById[tweet].author.avatarSrc} 
             date={homeFeedTweets.tweetsById[tweet].timestamp}
+            media={homeFeedTweets.tweetsById[tweet].media}
+            retweeted={homeFeedTweets.tweetsById[tweet].retweetFrom}
             />         
           
         );
     }))}
-    </WrapperTweet>
+   
     </Wrapper>
     
     );
@@ -65,12 +67,9 @@ const HomeFeed = () => {
   
   const Wrapper = styled.div`
     display: flex;
-    flex-direction: column;  
-  `;
-
-  const WrapperTweet = styled.div`
-    display: flex;
-    flex-direction: column;  
+    flex-direction: column; 
+    padding: 0 20px 20px 20px;   
+    
   `;
   
   export default HomeFeed;

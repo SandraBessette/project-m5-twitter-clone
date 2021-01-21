@@ -22,6 +22,7 @@ const App = () => {
     <Wrapper>
       <Sidebar></Sidebar>   
       { status === "loading" ? <p>Loading...</p>  : (
+      
       <Switch>
           <Route exact path="/">
             <HomeFeed />
@@ -38,17 +39,20 @@ const App = () => {
           <Route exact path="/:profileId">
             <Profile />
           </Route>
-      </Switch>)}
+      </Switch>
+      )}
     </Wrapper>
   </BrowserRouter>  );
 };
 const Wrapper = styled.div`
    display: flex; 
-  
-   max-width: 1200px;
+   max-width: 950px;
+   box-sizing: border-box;
    margin: 20px auto;  
+   padding: 20px;   
 
 `;
+
 
 export default App;
 

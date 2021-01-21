@@ -32,8 +32,9 @@ const Icon = styled.span`
 `;
 
 const Wrapper = styled.div`
-   margin: 0 20px;
+  // margin: 0 20px;
    min-width: 175px;
+   box-sizing:border-box;
 `;
 
 const NavBar = styled.nav`
