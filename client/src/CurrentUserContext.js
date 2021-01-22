@@ -15,9 +15,10 @@ export const CurrentUserProvider = ({ children }) => {
           .then((res) => res.json())
           .then((json) => {
               console.log('json', json);
-              setStatus("idle"); 
+             
               if(json){
                 setCurrentUser({...json});
+                setStatus("idle"); 
               }
             /*const { status, data, message } = json; 
             if (status === 200) {

@@ -1,36 +1,42 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { AiOutlineRetweet } from "react-icons/ai";
 import moment from 'moment'
 
-//import Avatar  from "./assets/no-profile-pic-icon-27.jpg";
 
-
-
-
-const Tweet = ({ handle, status, name, avatar, date, media, retweeted })=> {  
+const Tweet = ({ id, handle, status, name, avatar, date, media, retweeted })=> {  
     const isMedia = media.length !== 0 && media[0].type === 'img' ? true : false;
     const isRetweeted = retweeted ? true : false;
-    console.log('retweeted', retweeted);
+    const history = useHistory();
+    const onClickSingleTweet = (ev)=>{
+        ev.preventDefault();
+        history.push(`/tweet/${id}`);
+    }
+   
     return (
-        <>
-        {isRetweeted &&
-            <Retweet><AiOutlineRetweet/> {`${retweeted.displayName} Remeowed`}</Retweet>}
-        <Wrapper>
-            < Avatar src={avatar} alt="avatar" />
-            <div>            
-                <p><strong>{name}</strong> <Span>{ `@${handle} - ${moment(date).format("MMM Do")}`}</Span></p>
-                <Status>{status}</Status>
-                {isMedia &&
-                <Media src={media[0].url} alt="media" /> }
-            </div>
+        <Wrapper onClick={onClickSingleTweet}>
+            {isRetweeted &&
+                <Retweet><AiOutlineRetweet/> {`${retweeted.displayName} Remeowed`}</Retweet>}
+            <WrapperContent>
+                < Avatar src={avatar} alt="avatar" />
+                <div>            
+                    <p><strong>{name}</strong> <Span>{ `@${handle} - ${moment(date).format("MMM Do")}`}</Span></p>
+                    <Status>{status}</Status>
+                    {isMedia &&
+                    <Media src={media[0].url} alt="media" /> }
+                </div>
+            </WrapperContent>
         </Wrapper>
-        </>
     );
 
 };
 
 const Wrapper = styled.div`
+    cursor: pointer;  
+`;
+
+const WrapperContent = styled.div`
     display: flex;
     padding: 15px 0 20px 0;   
 `;

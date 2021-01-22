@@ -21,20 +21,7 @@ const HomeFeed = () => {
           setStatus("idle");
           console.log('Tweetjson', json.tweetIds);
         }
-        /*setStatus("idle"); 
-        if(json){
-          setCurrentUser({...json});
-        }*/
-      /*const { status, data, message } = json; 
-      if (status === 200) {
-        setUserReservation({...data});
-        setSubStatus("confirmed");   
-      }
-      else {
-        setSubStatus("error"); 
-        window.localStorage.clear();
-        console.log(message)
-      };*/
+    
     });
   }   , []);
 
@@ -48,6 +35,7 @@ const HomeFeed = () => {
         return (
           <Tweet 
             key={tweet}
+            id={tweet}
             handle={homeFeedTweets.tweetsById[tweet].author.handle}  
             status={homeFeedTweets.tweetsById[tweet].status}
             name={homeFeedTweets.tweetsById[tweet].author.displayName}
