@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import Tweet from '../Tweet';
+import { COLORS } from "../GlobalStyles";
 
 import { CurrentUserContext } from '../CurrentUserContext';
 
@@ -18,8 +19,7 @@ const HomeFeed = () => {
         
         if(json){
           setHomeFeedTweets({...json});
-          setStatus("idle");
-          console.log('Tweetjson', json.tweetIds);
+          setStatus("idle");        
         }
     
     });
@@ -56,7 +56,10 @@ const HomeFeed = () => {
   const Wrapper = styled.div`
     display: flex;
     flex-direction: column; 
-    padding: 0 20px 20px 20px;   
+  //  padding: 0 20px 20px 20px;   
+    margin: 0 20px;
+    border-left: solid 1px ${COLORS.lightGrey}; 
+    border-right: solid 1px ${COLORS.lightGrey}; 
     
   `;
   

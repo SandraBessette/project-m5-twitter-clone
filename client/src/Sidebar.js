@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink } from "react-router-dom";
 
+import { CurrentUserContext } from './CurrentUserContext';
 import { ReactComponent as Logo } from "./assets/logo.svg";
 import { FiHome, FiUser, FiBell, FiBookmark } from "react-icons/fi";
 import { COLORS } from "./GlobalStyles";
+//`/${currentUser.profile.handle}`
+
+const Sidebar = ()=>{   
+    const { currentUser } = useContext(CurrentUserContext);
+ 
 
 
-const Sidebar = ()=>{
-    console.log('icon', FiHome);
     return (
         <Wrapper> 
         <StyledLogo/>
         <NavBar >            
             <NavigationLink exact to="/" activeClassName='active'><Icon><FiHome/></Icon>Home</NavigationLink>
-            <NavigationLink to="/abc" activeClassName='active'><Icon><FiUser/></Icon>Profile</NavigationLink>
-            <NavigationLink to="/notifications" activeClassName='active'><Icon><FiBell/></Icon>Notifications</NavigationLink>
-            <NavigationLink to="/bookmarks" activeClassName='active'><Icon><FiBookmark/></Icon>Bookmarks</NavigationLink>
+            <NavigationLink exact to={`/${currentUser.profile.handle}`} activeClassName='active'><Icon><FiUser/></Icon>Profile</NavigationLink>
+            <NavigationLink exact to="/notifications" activeClassName='active'><Icon><FiBell/></Icon>Notifications</NavigationLink>
+            <NavigationLink exact to="/bookmarks" activeClassName='active'><Icon><FiBookmark/></Icon>Bookmarks</NavigationLink>
         </NavBar >
         </Wrapper>
     );

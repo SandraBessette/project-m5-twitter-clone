@@ -1,20 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import moment from 'moment'
+import moment from 'moment';
+import { useHistory } from "react-router-dom";
 
 
-const SingleTweet = ({ id, handle, status, name, avatar, date, media, retweeted })=> {  
+const SingleTweet = ({ id, handle, status, name, avatar, date, media, retweeted })=> { 
+    const history = useHistory(); 
     const isMedia = media.length !== 0 && media[0].type === 'img' ? true : false;
     const isRetweeted = retweeted ? true : false;
+
+    const onClickLink = (ev)=>{       
+        ev.preventDefault();
+        history.push(`/${handle}`);
+    };
 
     return (                 
             <WrapperContent>
                 <Top>
                     < Avatar src={avatar} alt="avatar" />
-                    <Name>
-                        <p><strong>{name}</strong></p>
+                    <Identification>
+                        <p><Name onClick={onClickLink}><strong>{name}</strong></Name></p>
                         <Handle >{`@${handle}`}</Handle >
-                    </Name>
+                    </Identification>
                 </Top>
                 <div> 
                     <Status>{status}</Status>
@@ -33,11 +40,17 @@ const Top = styled.div`
    // cursor: pointer;  
 `;
 
-const Name = styled.div`
+const Identification = styled.div`
     display: flex;
     flex-direction:column;
-    justify-content:center;
-   // cursor: pointer;  
+    justify-content:center; 
+`;
+
+const Name = styled.span`
+    &:hover {
+        cursor: pointer;  
+        text-decoration: underline;
+    }
 `;
 
 const Handle = styled.p`

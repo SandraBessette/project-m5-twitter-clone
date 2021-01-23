@@ -20,8 +20,9 @@ const App = () => {
   <BrowserRouter> 
     <GlobalStyles />   
     <Wrapper>
+    { status === "loading" ? <p>Loading...</p>  : (<>
       <Sidebar></Sidebar>   
-      { status === "loading" ? <p>Loading...</p>  : (
+     
       
       <Switch>
           <Route exact path="/">
@@ -40,7 +41,7 @@ const App = () => {
             <Profile />
           </Route>
       </Switch>
-      )}
+      </>)}
     </Wrapper>
   </BrowserRouter>  );
 };
@@ -48,7 +49,8 @@ const Wrapper = styled.div`
    display: flex; 
    max-width: 950px;
    box-sizing: border-box;
-   margin: 20px auto;  
+  // margin: 20px auto;  
+  margin: 0px auto; 
    padding: 20px;   
 
 `;
