@@ -1,37 +1,44 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import Tweet from '../Tweet';
+import TweetPost from './TweetPost';
 import { COLORS } from "../GlobalStyles";
 
 import { CurrentUserContext } from '../CurrentUserContext';
 
 const HomeFeed = () => {
-  //const { currentUser, status } = useContext(CurrentUserContext);
-  const [homeFeedTweets, setHomeFeedTweets] = React.useState(null);
-  const [status, setStatus] = React.useState("loading");
+  const { currentUser } = useContext(CurrentUserContext);
+  const [homeFeedTweets, setHomeFeedTweets] = useState(null);
 
-  useEffect(() => {        
+  const [status, setStatus] = React.useState("loading"); 
+
+  const fetchHomeFeedTweet = useCallback(()=>{
     setStatus("loading");   
     fetch('api/me/home-feed')
     .then((res) => res.json())
-    .then((json) => {
-        
-        
+    .then((json) => {    
         if(json){
+          console.log(json);
           setHomeFeedTweets({...json});
           setStatus("idle");        
-        }
-    
+        }    
     });
-  }   , []);
+
+  }, []);
+
+  useEffect(() => {     
+    fetchHomeFeedTweet();  
+    
+  }, [fetchHomeFeedTweet]);
 
   
     return (
-      <Wrapper>
-    <div>HomeFeed</div>
+      <Wrapper>    
+      <TweetPost avatar={currentUser.profile.avatarSrc} fetchHomeFeedTweet={fetchHomeFeedTweet}></TweetPost>
    
-    {homeFeedTweets === null ? <p>....</p> : (
-     status === "idle" && homeFeedTweets.tweetIds.map((tweet)=>{     
+    {homeFeedTweets === null ? <WaitingMessage>....</WaitingMessage> : (
+     
+     homeFeedTweets.tweetIds.map((tweet)=>{     
         return (
           <Tweet 
             key={tweet}
@@ -52,6 +59,11 @@ const HomeFeed = () => {
     
     );
   };
+
+  const WaitingMessage = styled.p`
+  display: block;
+    width: auto;
+  `;
   
   const Wrapper = styled.div`
     display: flex;

@@ -58,6 +58,7 @@ router.get('/api/tweet/:tweetId', (req, res) => {
  * Post a new tweet
  */
 router.post('/api/tweet', (req, res) => {
+  console.log('req.body.status', req.body.status);
   const newTweet = createTweet(req.body.status, { isRetweet: false });
   data.tweets[newTweet.id] = newTweet;
 

@@ -44,7 +44,7 @@ const Avatar = styled.img`
     width: 150px;
     object-fit: cover;
     border-radius: 50%;
-    border: solid 2px white;
+    border: solid 3px white;
 `;
 
 const Banner = styled.img`
