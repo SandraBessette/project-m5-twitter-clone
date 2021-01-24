@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import Tweet from '../Tweet';
+import Tweet from '../Tweet/Tweet';
 import ProfileTop from './ProfileTop';
 import { COLORS } from "../GlobalStyles";
 
@@ -31,20 +31,26 @@ const Profile = () => {
     });
   }   , [profileId]);
 
-  useEffect(() => {        
+  
+  const fetchProfileFeedTweet = useCallback(()=>{
     setStatus("loading");   
     fetch(`/api/${profileId}/feed`)
     .then((res) => res.json())
-    .then((json) => {       
-        
+    .then((json) => {
         if(json){
           setProfileTweets({...json});
-          setStatus("idle");
-     
+          setStatus("idle");     
         }
     
     });
-  }   , [profileId]);
+
+  }, [profileId]);
+
+
+  useEffect(() => {   
+    fetchProfileFeedTweet();    
+   
+  } , [fetchProfileFeedTweet]);
 
   //   
     return (
@@ -52,18 +58,13 @@ const Profile = () => {
         {profileTweets === null || profileInfo === null ? <p>....</p> : (
         <>
           <ProfileTop profileInfo={profileInfo.profile} /> 
-          { profileTweets.tweetIds.map((tweet)=>{     
+          { profileTweets.tweetIds.map((tweetId)=>{ 
+             const tweet = profileTweets.tweetsById[tweetId];        
               return (
                 <Tweet 
-                  key={tweet}
-                  id={tweet}
-                  handle={profileTweets.tweetsById[tweet].author.handle}  
-                  status={profileTweets.tweetsById[tweet].status}
-                  name={profileTweets.tweetsById[tweet].author.displayName}
-                  avatar={profileTweets.tweetsById[tweet].author.avatarSrc} 
-                  date={profileTweets.tweetsById[tweet].timestamp}
-                  media={profileTweets.tweetsById[tweet].media}
-                  retweeted={profileTweets.tweetsById[tweet].retweetFrom}
+                  key={tweetId}
+                  tweet={tweet}  
+                  fetchData={fetchProfileFeedTweet}                      
                   />  
                 )
             })     

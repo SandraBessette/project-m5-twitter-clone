@@ -103,11 +103,10 @@ const TextArea = styled.textarea`
     font-family: inherit;
     font-size: inherit;
     width: 600px;
-    height: 175px;
+    height: 125px;
     padding: 15px;
 
-    border: none;
-    overflow: hidden;
+    border: none;    
     outline: none;
 
    // -webkit-box-shadow: none;

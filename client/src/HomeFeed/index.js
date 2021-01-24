@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import Tweet from '../Tweet';
+import Tweet from '../Tweet/Tweet';
 import TweetPost from './TweetPost';
 import { COLORS } from "../GlobalStyles";
 
@@ -38,18 +38,13 @@ const HomeFeed = () => {
    
     {homeFeedTweets === null ? <WaitingMessage>....</WaitingMessage> : (
      
-     homeFeedTweets.tweetIds.map((tweet)=>{     
+     homeFeedTweets.tweetIds.map((tweetId)=>{ 
+        const tweet = homeFeedTweets.tweetsById[tweetId];    
         return (
           <Tweet 
-            key={tweet}
-            id={tweet}
-            handle={homeFeedTweets.tweetsById[tweet].author.handle}  
-            status={homeFeedTweets.tweetsById[tweet].status}
-            name={homeFeedTweets.tweetsById[tweet].author.displayName}
-            avatar={homeFeedTweets.tweetsById[tweet].author.avatarSrc} 
-            date={homeFeedTweets.tweetsById[tweet].timestamp}
-            media={homeFeedTweets.tweetsById[tweet].media}
-            retweeted={homeFeedTweets.tweetsById[tweet].retweetFrom}
+            key={tweetId}
+            tweet={tweet}   
+            fetchData={fetchHomeFeedTweet}        
             />         
           
         );
