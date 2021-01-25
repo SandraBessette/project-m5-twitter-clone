@@ -51,7 +51,7 @@ const Wrapper = styled.div`
    box-sizing: border-box;
   // margin: 20px auto;  
   margin: 0px auto; 
-   padding: 20px;   
+   padding: 0px 20px 20px 20px;   
 
 `;
 

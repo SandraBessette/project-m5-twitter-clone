@@ -7,9 +7,6 @@ import Stats from './Stats';
 
 import { COLORS } from "../GlobalStyles";
 
-
-
-
 const SingleTweet = ({ tweet, fetchData })=> { 
     const {
         id, 
@@ -101,7 +98,8 @@ const Date = styled.p`
 const WrapperContent = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 15px 15px 0 15px;    
+    padding: 15px 15px 0 15px; 
+    border: solid 1px ${COLORS.lightGrey};        
 `;   
 
 const Avatar = styled.img`
