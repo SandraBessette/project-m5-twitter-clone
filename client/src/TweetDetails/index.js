@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
-import { FiArrowLeft } from "react-icons/fi";
+import { BiArrowBack } from "react-icons/bi";
 
 import { COLORS } from "../GlobalStyles";
 import SingleTweet from './SingleTweet';
+import Action from '../Tweet/Action';
 
 
 const TweetDetails = () => {
@@ -34,10 +35,10 @@ const TweetDetails = () => {
     return (     
       <Wrapper>
          <TitleWrapper>
-           <Button onClick={()=>history.goBack()}>
+            <Action color="grey" size={40} onClick={()=>history.goBack()}>
               <ArrowIcon color='grey'/>
-            </Button>
-            <h1>Meow</h1>
+            </Action>
+            <Title>Meow</Title>
         </TitleWrapper>   
       {tweetDetails === null ? <p>Tweet details....</p> : (
              
@@ -69,20 +70,10 @@ const TitleWrapper = styled.div`
   font-size: 20px;
   `;
 
-const Button = styled.button` 
-  margin: 0;
-  padding: 0; 
-  border: none;
-  background: transparent;
-  cursor: pointer;  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  outline: none;
+const Title = styled.h1`
+  margin: 0 20px;
 `;
-
-const ArrowIcon = styled(FiArrowLeft)`
-  margin-right: 20px;
+const ArrowIcon = styled(BiArrowBack)`
   width: 20px;
   height: 20px;
 `;
