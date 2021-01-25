@@ -58,6 +58,7 @@ const TweetDetails = () => {
     display: flex;
     flex-direction: column;  
     margin: 0 20px;    
+    width: 100%;
   `;
 
 const TitleWrapper = styled.div`
