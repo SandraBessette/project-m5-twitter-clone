@@ -9,28 +9,22 @@ export const CurrentUserProvider = ({ children }) => {
     // Fetch the user data from the API (/me/profile)
     // When the data is received, update currentUser.
     // Also, set `status` to `idle`
+   
     useEffect(() => {        
           setStatus("loading");   
           fetch('api/me/profile')
           .then((res) => res.json())
           .then((json) => {
-              console.log('MainProfileFecht');
-             
-              if(json){
+              console.log('MainProfileFecht');             
+              if (json){
                 setCurrentUser({...json});
                 setStatus("idle"); 
-              }
-            /*const { status, data, message } = json; 
-            if (status === 200) {
-              setUserReservation({...data});
-              setSubStatus("confirmed");   
-            }
-            else {
-              setSubStatus("error"); 
-              window.localStorage.clear();
-              console.log(message)
-            };*/
-          });
+              } 
+          })
+          .catch((error)=>{
+            console.log('CurrentUsererror', error);
+            setStatus("error");
+          })
         }   , []);
   
     return (

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Tweet from '../Tweet/Tweet';
 import TweetPost from './TweetPost';
 import Spinner from '../Spinner';
+import Error from '../Error';
 import { COLORS } from "../GlobalStyles";
 
 import { CurrentUserContext } from '../CurrentUserContext';
@@ -12,6 +13,10 @@ const HomeFeed = () => {
   const [homeFeedTweets, setHomeFeedTweets] = useState(null);
 
   const [status, setStatus] = React.useState("loading"); 
+
+  const handleErrorStatus = ()=>{  
+    setStatus("error");
+  }
 
   const fetchHomeFeedTweet = useCallback(()=>{
     setStatus("loading");   
@@ -23,8 +28,11 @@ const HomeFeed = () => {
           setHomeFeedTweets({...json});
           setStatus("idle");        
         }    
-    });
-
+    })
+    .catch((error)=>{
+      console.log('Homefeederror', error);
+      handleErrorStatus();
+    })
   }, []);
 
   useEffect(() => {     
@@ -38,10 +46,10 @@ const HomeFeed = () => {
          <TitleWrapper>
             <h1>Home</h1>
         </TitleWrapper>    
-      <TweetPost avatar={currentUser.profile.avatarSrc} fetchHomeFeedTweet={fetchHomeFeedTweet}></TweetPost>
-   
-    {homeFeedTweets === null ? <Spinner /> : (
-     
+      <TweetPost avatar={currentUser.profile.avatarSrc} fetchHomeFeedTweet={fetchHomeFeedTweet} handleErrorStatus={handleErrorStatus}></TweetPost>
+    {status === "error" && <Error />}
+    {status === "loading" && <Spinner />}
+    {status === "idle" &&      
      homeFeedTweets.tweetIds.map((tweetId)=>{ 
         const tweet = homeFeedTweets.tweetsById[tweetId];    
         return (
@@ -51,7 +59,7 @@ const HomeFeed = () => {
             />         
           
         );
-    }))}
+    })}
    
     </Wrapper>
     

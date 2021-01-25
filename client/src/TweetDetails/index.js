@@ -7,6 +7,7 @@ import { COLORS } from "../GlobalStyles";
 import SingleTweet from './SingleTweet';
 import Action from '../Tweet/Action';
 import Spinner from '../Spinner';
+import Error from '../Error';
 
 
 const TweetDetails = () => {
@@ -26,7 +27,11 @@ const TweetDetails = () => {
           setStatus("idle");
          // console.log('Tweetjson', json.tweetIds);
         }    
-    });   
+    })
+    .catch((error)=>{
+      console.log('TweetError', error);
+      setStatus("error");
+    })
   } , [tweetId]);
 
     return (     
@@ -37,13 +42,13 @@ const TweetDetails = () => {
             </Action>
             <Title>Meow</Title>
         </TitleWrapper>   
-      {tweetDetails === null ? <Spinner /> : (
-             
+        {status === "error" && <Error />}
+        {status === "loading" && <Spinner />}
+        {status === "idle" &&
              <SingleTweet 
                key={tweetId}
                tweet={tweetDetails.tweet}                         
                /> 
-           )
        }
       </Wrapper>
     );

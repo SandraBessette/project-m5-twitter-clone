@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Tweet from '../Tweet/Tweet';
 import ProfileTop from './ProfileTop';
 import Spinner from '../Spinner';
+import Error from '../Error';
 import { COLORS } from "../GlobalStyles";
 
 
@@ -11,42 +12,47 @@ const Profile = () => {
   const { profileId } = useParams();
   const [profileTweets, setProfileTweets] = React.useState(null);
   const [profileInfo, setProfileInfo] = React.useState(null);
-  const [status, setStatus] = React.useState("loading");
-  
-
+  const [statusProfile, setStatusProfile] = React.useState("loading");
+  const [statusFeed, setStatusFeed] = React.useState("loading");
+ 
   useEffect(() => {        
-    setStatus("loading");   
+    setStatusProfile("loading");   
     fetch(`/api/${profileId}/profile`)
     .then((res) => res.json())
     .then((json) => {      
-     
-        if(json){
+        const { error } = json;
+        if (json && json.profile){
           setProfileInfo({...json});
-          setStatus("idle");
+          setStatusProfile("idle");
           console.log('ProfileInfo fect');
         }
-    
+        else if (error) {
+          console.log('profileerror', error);
+          setStatusProfile(error);
+        }    
     });
   }   , [profileId]);
 
 
   useEffect(() => {   
-    setStatus("loading");   
+    setStatusFeed("loading");   
     fetch(`/api/${profileId}/feed`)
     .then((res) => res.json())
     .then((json) => {
         if(json){
-          console.log('Profile feed fecht');
+          console.log('Profile feed fecht', json);
           setProfileTweets({...json});
-          setStatus("idle");     
-        }    
-    });       
+          setStatusFeed("idle");     
+        } 
+    })       
   } , [profileId]);
 
   //   
     return (
       <Wrapper>
-        {profileTweets === null || profileInfo === null ? <Spinner /> : (
+        { (statusProfile !== 'loading' && statusProfile !== 'idle') && <Error message={statusProfile}/>}      
+        { (statusProfile === 'loading' || statusFeed === "loading") && <Spinner />}
+        { (statusProfile === 'idle' && statusFeed === "idle") &&
         <>
           <ProfileTop profileInfo={profileInfo.profile} /> 
           { profileTweets.tweetIds.map((tweetId)=>{ 
@@ -59,7 +65,8 @@ const Profile = () => {
                 )
             })     
           }  
-       </> )}       
+       </> }  
+       
     </Wrapper>    
     );
   };

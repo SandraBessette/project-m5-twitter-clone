@@ -7,7 +7,8 @@ import Bookmarks from './Bookmarks';
 import TweetDetails from './TweetDetails';
 import Profile from './Profile';
 import Sidebar from './Sidebar';
-import Spinner from './Spinner'
+import Spinner from './Spinner';
+import Error from './Error';
 import GlobalStyles from "./GlobalStyles";
 import { CurrentUserContext } from './CurrentUserContext';
 import logo from './logo.svg'; 
@@ -18,6 +19,49 @@ const App = () => {
   const { status } = useContext(CurrentUserContext);
 
   return (    
+  <BrowserRouter> 
+    <GlobalStyles />   
+    <Wrapper>    
+      <Sidebar></Sidebar>       
+      { status === "loading" && <Spinner /> }
+      { status === "error" && <Error /> } 
+      { status === "idle" &&  
+
+      <>
+      <Switch>
+          <Route exact path="/">
+            <HomeFeed />
+          </Route>
+          <Route exact path="/notifications">
+            <Notifications />
+          </Route>
+          <Route exact path="/bookmarks">
+            <Bookmarks/>
+          </Route>
+          <Route exact path="/tweet/:tweetId">
+            <TweetDetails />
+          </Route>
+          <Route exact path="/:profileId">
+            <Profile />
+          </Route>
+      </Switch>
+      </>}
+    </Wrapper>
+  </BrowserRouter>  );
+};
+const Wrapper = styled.div`
+   display: flex; 
+   max-width: 950px;
+   box-sizing: border-box;  
+   margin: 0px auto; 
+   padding: 0px 20px 20px 20px;   
+
+`;
+
+
+export default App;
+
+/*return (    
   <BrowserRouter> 
     <GlobalStyles />   
     <Wrapper>    
@@ -42,17 +86,4 @@ const App = () => {
       </Switch>
       </>)}
     </Wrapper>
-  </BrowserRouter>  );
-};
-const Wrapper = styled.div`
-   display: flex; 
-   max-width: 950px;
-   box-sizing: border-box;  
-   margin: 0px auto; 
-   padding: 0px 20px 20px 20px;   
-
-`;
-
-
-export default App;
-
+  </BrowserRouter>  );*/

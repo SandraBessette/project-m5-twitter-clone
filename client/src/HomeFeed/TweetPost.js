@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { COLORS } from "../GlobalStyles";
 
-const TweetPost = ({ avatar, fetchHomeFeedTweet}) =>{
+const TweetPost = ({ avatar, fetchHomeFeedTweet, handleErrorStatus}) =>{
     const [message, setMessage] = useState("");
 
     const handleSubmitTweetMessage = (ev)=>{
@@ -21,7 +21,12 @@ const TweetPost = ({ avatar, fetchHomeFeedTweet}) =>{
             .then((json) => {
               setMessage("");
               fetchHomeFeedTweet();  
-            });
+            })
+            .catch((error)=>{
+                console.log('TweetPosterror', error);
+                setMessage("");
+                handleErrorStatus("error");
+              })
       };   
      
   

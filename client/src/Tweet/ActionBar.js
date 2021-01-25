@@ -11,9 +11,9 @@ const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, handleToggl
     const componentsJustMounted = useRef(true);
 
     useEffect(() => {     
-        console.log('useEffect')  ; 
+       // console.log('useEffect')  ; 
         if(componentsJustMounted){
-            console.log('componentsJustMounted')  ; 
+          //  console.log('componentsJustMounted')  ; 
             componentsJustMounted.current= false;
         }
       } , []);
