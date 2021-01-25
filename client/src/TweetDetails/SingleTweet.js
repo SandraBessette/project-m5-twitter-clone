@@ -2,33 +2,66 @@ import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useHistory } from "react-router-dom";
+import ActionBar from '../Tweet/ActionBar';
+import Stats from './Stats';
+
+import { COLORS } from "../GlobalStyles";
 
 
-const SingleTweet = ({ id, handle, status, name, avatar, date, media, retweeted })=> { 
+
+
+const SingleTweet = ({ tweet, fetchData })=> { 
+    const {
+        id, 
+        author,
+        timestamp,
+        media,
+        retweetFrom,
+        isLiked,
+        isRetweeted,
+        numLikes,
+        numRetweets,
+        status
+    } = tweet;
+
     const history = useHistory(); 
     const isMedia = media.length !== 0 && media[0].type === 'img' ? true : false;
-    const isRetweeted = retweeted ? true : false;
+    const isRetweetedFrom = retweetFrom ? true : false;
 
     const onClickLink = (ev)=>{       
         ev.preventDefault();
-        history.push(`/${handle}`);
+        history.push(`/${author.handle}`);
     };
 
     return (                 
             <WrapperContent>
                 <Top>
-                    < Avatar src={avatar} alt="avatar" />
+                    < Avatar src={author.avatarSrc} alt="avatar" />
                     <Identification>
-                        <p><Name onClick={onClickLink}><strong>{name}</strong></Name></p>
-                        <Handle >{`@${handle}`}</Handle >
+                        <p><Name onClick={onClickLink}><strong>{author.displayName}</strong></Name></p>
+                        <Handle >{`@${author.handle}`}</Handle >
                     </Identification>
                 </Top>
                 <div> 
                     <Status>{status}</Status>
                     {isMedia &&
                     <Media src={media[0].url} alt="media" /> }
-                    <Date>{ `${moment(date).format('h:mm A, MMM D YYYY')} - critter web app`}</Date>
+                    <Date>{ `${moment(timestamp).format('h:mm A · MMM D YYYY')} · critter web app`}</Date>
                 </div>
+                { (numLikes !== 0 || numRetweets !== 0) && 
+                 <>
+                    <Divider />               
+                    <StatsWrapper>
+                        <Stats num={numRetweets} >Retweets</Stats> 
+                        <Stats num={numLikes} >Likes</Stats> 
+                    </StatsWrapper>
+                </> }
+                 <Divider />                 
+                <ActionBar 
+                    id={id}                    
+                    isLiked={isLiked}
+                    isRetweeted={isRetweeted}
+                    fetchData={fetchData} />           
             </WrapperContent>
        
     );
@@ -60,16 +93,16 @@ const Handle = styled.p`
 
 const Date = styled.p`
     color: grey;
-    margin: 10px 0;
-    font-size: 14px;  
+    margin: 15px 0;
+    font-size: 15px;  
     
 `;
 
 const WrapperContent = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 15px 0 20px 0;   
-`;
+    padding: 15px 15px 0 15px;    
+`;   
 
 const Avatar = styled.img`
     width: 55px;
@@ -90,5 +123,13 @@ const Status = styled.p`
     font-size: 18px;  
 `;
 
+const StatsWrapper = styled.div`
+  display: flex;
+`;
+
+const Divider = styled.div`
+     height: 1px;
+    background: ${COLORS.lightGrey};
+`;
 
 export default SingleTweet;

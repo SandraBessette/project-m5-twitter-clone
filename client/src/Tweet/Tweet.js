@@ -42,7 +42,7 @@ const Tweet = ({ tweet, fetchData })=> {
                     <div>            
                         <p>
                             <Name onClick={onClickLink}><strong>{author.displayName}</strong></Name>
-                            <Span>{ `@${author.handle} - ${moment(timestamp).format("MMM Do")}`}</Span>
+                            <Span>{ `@${author.handle} · ${moment(timestamp).format("MMM Do")}`}</Span>
                         </p>
                         <Status>{status}</Status>
                         {isMedia &&
