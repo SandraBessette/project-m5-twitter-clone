@@ -7,6 +7,7 @@ import Bookmarks from './Bookmarks';
 import TweetDetails from './TweetDetails';
 import Profile from './Profile';
 import Sidebar from './Sidebar';
+import Spinner from './Spinner'
 import GlobalStyles from "./GlobalStyles";
 import { CurrentUserContext } from './CurrentUserContext';
 import logo from './logo.svg'; 
@@ -14,16 +15,14 @@ import logo from './logo.svg';
 
 
 const App = () => {
-  const { currentUser, status } = useContext(CurrentUserContext);
+  const { status } = useContext(CurrentUserContext);
 
   return (    
   <BrowserRouter> 
     <GlobalStyles />   
-    <Wrapper>
-    { status === "loading" ? <p>Loading...</p>  : (<>
-      <Sidebar></Sidebar>   
-     
-      
+    <Wrapper>    
+      <Sidebar></Sidebar>       
+      { status === "loading" ? <Spinner />  : (<>
       <Switch>
           <Route exact path="/">
             <HomeFeed />
@@ -48,9 +47,8 @@ const App = () => {
 const Wrapper = styled.div`
    display: flex; 
    max-width: 950px;
-   box-sizing: border-box;
-  // margin: 20px auto;  
-  margin: 0px auto; 
+   box-sizing: border-box;  
+   margin: 0px auto; 
    padding: 0px 20px 20px 20px;   
 
 `;

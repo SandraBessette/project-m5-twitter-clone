@@ -18,7 +18,7 @@ const Sidebar = ()=>{
         <StyledLogo/>
         <NavBar >            
             <NavigationLink exact to="/" activeClassName='active'><Icon><FiHome/></Icon>Home</NavigationLink>
-            <NavigationLink exact to={`/${currentUser.profile.handle}`} activeClassName='active'><Icon><FiUser/></Icon>Profile</NavigationLink>
+            <NavigationLink exact to={`/${currentUser ? currentUser.profile.handle : ""}`} activeClassName='active'><Icon><FiUser/></Icon>Profile</NavigationLink>
             <NavigationLink exact to="/notifications" activeClassName='active'><Icon><FiBell/></Icon>Notifications</NavigationLink>
             <NavigationLink exact to="/bookmarks" activeClassName='active'><Icon><FiBookmark/></Icon>Bookmarks</NavigationLink>
         </NavBar >

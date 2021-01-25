@@ -7,9 +7,10 @@ import moment from 'moment'
 
 import { COLORS } from "../GlobalStyles";
 import ActionBar from './ActionBar';
+import useLikes from '../hooks/use-Likes.hook';
 
 
-const Tweet = ({ tweet, fetchData })=> {  
+const Tweet = ({ tweet })=> {  
     const {
         id, 
         author,
@@ -22,6 +23,8 @@ const Tweet = ({ tweet, fetchData })=> {
         numRetweets,
         status
     } = tweet;
+
+    const [isLikedState, numLikesState, handleToggleLike] = useLikes(isLiked, numLikes);  
 
     const isMedia = media.length !== 0 && media[0].type === 'img' ? true : false;
     const isRetweetedFrom = retweetFrom ? true : false;
@@ -51,11 +54,11 @@ const Tweet = ({ tweet, fetchData })=> {
                 </WrapperContent>
                 <ActionBar 
                     id={id}
-                    numLikes={numLikes}
+                    numLikes={numLikesState}
                     numRetweets={numRetweets}
-                    isLiked={isLiked}
+                    isLiked={isLikedState}
                     isRetweeted={isRetweeted}
-                    fetchData={fetchData}/>
+                    handleToggleLike={handleToggleLike}/>
             </Wrapper>
         </NavLinkStyle>
     );

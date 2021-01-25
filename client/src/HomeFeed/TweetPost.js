@@ -25,11 +25,7 @@ const TweetPost = ({ avatar, fetchHomeFeedTweet}) =>{
       };   
      
   
-    return(
-        <>
-        <TitleWrapper>
-            <h1>Home</h1>
-        </TitleWrapper>        
+    return(                   
         <Wrapper>
             <Avatar src={avatar} alt="avatar" />
             <form onSubmit={(ev)=>handleSubmitTweetMessage(ev)}>
@@ -60,25 +56,14 @@ const TweetPost = ({ avatar, fetchHomeFeedTweet}) =>{
                         />
                 </Container>
             </form>
-        </Wrapper>
-        </>
-
+        </Wrapper>       
     );
-
 };
 
 const Container = styled.div`
    float: right;
 `;
 
-const TitleWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 0 20px;    
-    height: 50px;
-    border-bottom: solid 1px ${COLORS.lightGrey};
-    font-size: 20px;
-`;
 
 const Wrapper = styled.div`
     display: flex;

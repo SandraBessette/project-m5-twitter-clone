@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Tweet from '../Tweet/Tweet';
 import ProfileTop from './ProfileTop';
+import Spinner from '../Spinner';
 import { COLORS } from "../GlobalStyles";
 
-import { CurrentUserContext } from '../CurrentUserContext';
 
 const Profile = () => {
-  //const { currentUser, status } = useContext(CurrentUserContext);
   const { profileId } = useParams();
   const [profileTweets, setProfileTweets] = React.useState(null);
   const [profileInfo, setProfileInfo] = React.useState(null);
   const [status, setStatus] = React.useState("loading");
-
   
 
   useEffect(() => {        
@@ -25,37 +23,30 @@ const Profile = () => {
         if(json){
           setProfileInfo({...json});
           setStatus("idle");
-          console.log('ProfileInfo', json);
+          console.log('ProfileInfo fect');
         }
     
     });
   }   , [profileId]);
 
-  
-  const fetchProfileFeedTweet = useCallback(()=>{
+
+  useEffect(() => {   
     setStatus("loading");   
     fetch(`/api/${profileId}/feed`)
     .then((res) => res.json())
     .then((json) => {
         if(json){
+          console.log('Profile feed fecht');
           setProfileTweets({...json});
           setStatus("idle");     
-        }
-    
-    });
-
-  }, [profileId]);
-
-
-  useEffect(() => {   
-    fetchProfileFeedTweet();    
-   
-  } , [fetchProfileFeedTweet]);
+        }    
+    });       
+  } , [profileId]);
 
   //   
     return (
       <Wrapper>
-        {profileTweets === null || profileInfo === null ? <p>....</p> : (
+        {profileTweets === null || profileInfo === null ? <Spinner /> : (
         <>
           <ProfileTop profileInfo={profileInfo.profile} /> 
           { profileTweets.tweetIds.map((tweetId)=>{ 
@@ -63,8 +54,7 @@ const Profile = () => {
               return (
                 <Tweet 
                   key={tweetId}
-                  tweet={tweet}  
-                  fetchData={fetchProfileFeedTweet}                      
+                  tweet={tweet}                                       
                   />  
                 )
             })     
@@ -76,11 +66,11 @@ const Profile = () => {
   
   const Wrapper = styled.div`
     display: flex;
-    flex-direction: column; 
-    //padding: 0 20px 20px 20px;  
+    flex-direction: column;   
     margin: 0 20px;
     border-left: solid 1px ${COLORS.lightGrey}; 
     border-right: solid 1px ${COLORS.lightGrey}; 
+    width: 100%;
     
   `;
   

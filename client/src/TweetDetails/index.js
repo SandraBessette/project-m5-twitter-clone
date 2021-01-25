@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams, useHistory } from 'react-router-dom';
 import { BiArrowBack } from "react-icons/bi";
@@ -6,6 +6,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { COLORS } from "../GlobalStyles";
 import SingleTweet from './SingleTweet';
 import Action from '../Tweet/Action';
+import Spinner from '../Spinner';
 
 
 const TweetDetails = () => {
@@ -14,23 +15,19 @@ const TweetDetails = () => {
   const [status, setStatus] = useState("loading");
   const history = useHistory(); 
 
-  const fetchTweetDetails = useCallback(()=>{
+  useEffect(() => {  
     setStatus("loading");   
     fetch(`/api/tweet/${tweetId}`)
     .then((res) => res.json())
     .then((json) => {  
         if(json){
+          console.log('detailfecht');
           setTweetDetails({...json});
           setStatus("idle");
          // console.log('Tweetjson', json.tweetIds);
         }    
-    });
-
-  }, [tweetId]);
-
-  useEffect(() => {  
-    fetchTweetDetails();   
-  } , [fetchTweetDetails]);
+    });   
+  } , [tweetId]);
 
     return (     
       <Wrapper>
@@ -40,12 +37,11 @@ const TweetDetails = () => {
             </Action>
             <Title>Meow</Title>
         </TitleWrapper>   
-      {tweetDetails === null ? <p>Tweet details....</p> : (
+      {tweetDetails === null ? <Spinner /> : (
              
              <SingleTweet 
                key={tweetId}
-               tweet={tweetDetails.tweet} 
-               fetchData={fetchTweetDetails}              
+               tweet={tweetDetails.tweet}                         
                /> 
            )
        }

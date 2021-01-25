@@ -14,7 +14,7 @@ export const CurrentUserProvider = ({ children }) => {
           fetch('api/me/profile')
           .then((res) => res.json())
           .then((json) => {
-              console.log('json', json);
+              console.log('MainProfileFecht');
              
               if(json){
                 setCurrentUser({...json});

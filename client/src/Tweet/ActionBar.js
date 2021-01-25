@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { FiMessageCircle, FiRepeat, FiHeart, FiShare } from "react-icons/fi";
 
 import Action from './Action';
 
 
-const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, fetchData})=>{
+const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, handleToggleLike})=>{
+    
+    //console.log('id and numLikes', {is, numOfLikes});
+    const componentsJustMounted = useRef(true);
+
+    useEffect(() => {     
+        console.log('useEffect')  ; 
+        if(componentsJustMounted){
+            console.log('componentsJustMounted')  ; 
+            componentsJustMounted.current= false;
+        }
+      } , []);
+
+   
 
     const handleLikeClick =(ev)=>{
         console.log('isLiked', isLiked);
@@ -20,11 +33,13 @@ const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, fetchData})
         })
             .then((res) => res.json())
             .then((json) => {
-                console.log('testkkk', json);
-                fetchData();  
+                if(json && json.success) {
+                   
+                    console.log('testkkk', json);
+                    handleToggleLike();  
+                    } 
             });
-    };
-  
+    };  
 
     return (
         <Wrapper>

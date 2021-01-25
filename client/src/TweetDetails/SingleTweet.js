@@ -4,10 +4,11 @@ import moment from 'moment';
 import { useHistory } from "react-router-dom";
 import ActionBar from '../Tweet/ActionBar';
 import Stats from './Stats';
+import useLikes from '../hooks/use-Likes.hook';
 
 import { COLORS } from "../GlobalStyles";
 
-const SingleTweet = ({ tweet, fetchData })=> { 
+const SingleTweet = ({ tweet })=> { 
     const {
         id, 
         author,
@@ -20,6 +21,8 @@ const SingleTweet = ({ tweet, fetchData })=> {
         numRetweets,
         status
     } = tweet;
+
+    const [isLikedState, numLikesState, handleToggleLike] = useLikes(isLiked, numLikes); 
 
     const history = useHistory(); 
     const isMedia = media.length !== 0 && media[0].type === 'img' ? true : false;
@@ -45,20 +48,20 @@ const SingleTweet = ({ tweet, fetchData })=> {
                     <Media src={media[0].url} alt="media" /> }
                     <Date>{ `${moment(timestamp).format('h:mm A · MMM D YYYY')} · critter web app`}</Date>
                 </div>
-                { (numLikes !== 0 || numRetweets !== 0) && 
+                { (numLikesState !== 0 || numRetweets !== 0) && 
                  <>
                     <Divider />               
                     <StatsWrapper>
                         <Stats num={numRetweets} >Retweets</Stats> 
-                        <Stats num={numLikes} >Likes</Stats> 
+                        <Stats num={numLikesState} >Likes</Stats> 
                     </StatsWrapper>
                 </> }
                  <Divider />                 
                 <ActionBar 
                     id={id}                    
-                    isLiked={isLiked}
+                    isLiked={isLikedState}
                     isRetweeted={isRetweeted}
-                    fetchData={fetchData} />           
+                    handleToggleLike={handleToggleLike} />           
             </WrapperContent>
        
     );
