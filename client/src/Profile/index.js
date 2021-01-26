@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import Tweet from '../Tweet/Tweet';
+import { BrowserRouter, Router, Switch, Route, useParams, useHistory } from 'react-router-dom';
 import ProfileTop from './ProfileTop';
 import Spinner from '../Spinner';
 import Error from '../Error';
+import TopNavBar from './TopNavBar';
+import Media from './Media';
+import Likes from './Likes';
+import ProfileFeed from './ProfileFeed';
 import { COLORS } from "../GlobalStyles";
 
 
 const Profile = () => {
   const { profileId } = useParams();
-  const [profileTweets, setProfileTweets] = React.useState(null);
-  const [profileInfo, setProfileInfo] = React.useState(null);
-  const [statusProfile, setStatusProfile] = React.useState("loading");
-  const [statusFeed, setStatusFeed] = React.useState("loading");
+  const [profileTweets, setProfileTweets] = useState(null);
+  const [profileInfo, setProfileInfo] = useState(null);
+  const [statusProfile, setStatusProfile] = useState("loading");
+  const [statusFeed, setStatusFeed] = useState("loading");
+  const history = useHistory();
  
   useEffect(() => {        
     setStatusProfile("loading");   
@@ -47,27 +51,31 @@ const Profile = () => {
     })       
   } , [profileId]);
 
-  //   
-    return (
+  //   basename={`/${profileId}`}
+    return ( 
+    < Router history={history}>    
       <Wrapper>
         { (statusProfile !== 'loading' && statusProfile !== 'idle') && <Error message={statusProfile}/>}      
         { (statusProfile === 'loading' || statusFeed === "loading") && <Spinner />}
         { (statusProfile === 'idle' && statusFeed === "idle") &&
         <>
           <ProfileTop profileInfo={profileInfo.profile} /> 
-          { profileTweets.tweetIds.map((tweetId)=>{ 
-             const tweet = profileTweets.tweetsById[tweetId];        
-              return (
-                <Tweet 
-                  key={tweetId}
-                  tweet={tweet}                                       
-                  />  
-                )
-            })     
-          }  
-       </> }  
-       
-    </Wrapper>    
+          <TopNavBar profileId={profileId}/>
+          <Switch>        
+            <Route exact path={`/${profileId}/likes`}>
+              <Likes/>
+            </Route>
+            <Route path={`/${profileId}/media`}>
+              <Media />
+            </Route>
+            <Route exact path={`/${profileId}`}>
+              <ProfileFeed profileTweets={profileTweets}/>
+            </Route>
+          </Switch>          
+       </> }         
+    </Wrapper>  
+   </Router>  
+     
     );
   };
   
