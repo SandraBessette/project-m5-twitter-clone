@@ -56,30 +56,3 @@ const Wrapper = styled.div`
 `;
 
 export default App;
-
-/*return (    
-  <BrowserRouter> 
-    <GlobalStyles />   
-    <Wrapper>    
-      <Sidebar></Sidebar>       
-      { status === "loading" ? <Spinner />  : (<>
-      <Switch>
-          <Route exact path="/">
-            <HomeFeed />
-          </Route>
-          <Route exact path="/notifications">
-            <Notifications />
-          </Route>
-          <Route exact path="/bookmarks">
-            <Bookmarks/>
-          </Route>
-          <Route exact path="/tweet/:tweetId">
-            <TweetDetails />
-          </Route>
-          <Route exact path="/:profileId">
-            <Profile />
-          </Route>
-      </Switch>
-      </>)}
-    </Wrapper>
-  </BrowserRouter>  );*/
