@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import { AiOutlineRetweet } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import ActionBar from '../Tweet/ActionBar';
 import Stats from './Stats';
@@ -28,6 +29,8 @@ const SingleTweet = ({ tweet })=> {
     const isRetweetedFrom = retweetFrom ? true : false;    
     return (                 
             <WrapperContent>
+                {isRetweetedFrom &&
+                    <Retweet><AiOutlineRetweet/> {`${retweetFrom.displayName} Remeowed`}</Retweet>}
                 <Top>
                     < Avatar src={author.avatarSrc} alt="avatar" />
                     <Identification>
@@ -121,6 +124,10 @@ const Status = styled.p`
 
 const StatsWrapper = styled.div`
   display: flex;
+`;
+
+const Retweet = styled(Handle)` 
+    margin-bottom: 10px;
 `;
 
 const Divider = styled.div`

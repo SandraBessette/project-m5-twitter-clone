@@ -25,8 +25,8 @@ const NavBar = styled.nav`
 const StyledNavLink = styled(NavLink)` 
   text-decoration: none;
   width: 100%;
-  text-align: center;
-  padding: 12px 0 30px 0;
+  text-align: center;  
+  padding: 20px 0;
   color: black;
   border-bottom: solid 2px ${COLORS.lightGrey}; 
 
@@ -37,7 +37,7 @@ const StyledNavLink = styled(NavLink)`
 
   &:hover {  
     color: ${COLORS.primary};
-    border-bottom: solid 2px ${COLORS.primary}; 
+    background-color: ${COLORS.primaryLight}; 
   }
 `;
 

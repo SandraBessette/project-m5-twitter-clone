@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import { FiMapPin, FiCalendar } from "react-icons/fi";
 import { COLORS } from "../GlobalStyles";
+import Button from "../Tools/Button";
 
 
 
@@ -12,6 +13,13 @@ const ProfileTop = ({ profileInfo })=> {
         <Wrapper>
             <Banner src= {profileInfo.bannerSrc} alt='banner' />
             <Avatar src= {profileInfo.avatarSrc} alt='avatar' />
+            < ButtonWrapper>
+            <Button
+                 color={profileInfo.isBeingFollowedByYou ? 'white' : COLORS.primary }
+                 fill={profileInfo.isBeingFollowedByYou ? COLORS.primary : 'white'}
+            >{profileInfo.isBeingFollowedByYou ? 'Following' : 'Follow'}
+            </Button>
+            </ ButtonWrapper>
             <WrapperInfo>
                 <Name><strong>{profileInfo.displayName}</strong></Name>
                 <Handle>{`@${profileInfo.handle}`} {profileInfo.isFollowingYou && <FollowYou>follow you</FollowYou>}</Handle>
@@ -55,6 +63,11 @@ const Banner = styled.img`
 
 const WrapperInfo = styled.div`
     margin: 90px 25px 25px 25px;
+`;
+const ButtonWrapper = styled.div`
+    float: right;
+    width: 125px;
+    margin: 20px;
 `;
 
 const Name = styled.p`

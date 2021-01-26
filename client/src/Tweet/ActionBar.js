@@ -7,8 +7,7 @@ import Action from './Action';
 
 const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, handleToggleLike})=>{ 
 
-    const handleLikeClick =(ev)=>{
-        console.log('isLiked', isLiked);
+    const handleLikeClick =(ev)=>{     
         ev.preventDefault();      
         fetch(`/api/tweet/${id}/like`, {
             method: "PUT",

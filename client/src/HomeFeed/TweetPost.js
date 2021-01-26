@@ -7,8 +7,7 @@ const TweetPost = ({ avatar, fetchHomeFeedTweet, handleErrorStatus}) =>{
     const [message, setMessage] = useState("");
 
     const handleSubmitTweetMessage = (ev)=>{
-        ev.preventDefault(); 
-        console.log('message', message);  
+        ev.preventDefault();      
         fetch("/api/tweet", {
             method: "POST",
             body: JSON.stringify({status: message}),
@@ -22,8 +21,7 @@ const TweetPost = ({ avatar, fetchHomeFeedTweet, handleErrorStatus}) =>{
               setMessage("");
               fetchHomeFeedTweet();  
             })
-            .catch((error)=>{
-                console.log('TweetPosterror', error);
+            .catch((error)=>{            
                 setMessage("");
                 handleErrorStatus("error");
               })
@@ -72,12 +70,9 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
     display: flex;
-       padding: 15px 20px;
-    
-   // height: 50px;
+    padding: 15px 20px;    
     border-bottom: solid 10px ${COLORS.lightGrey};
-    margin-bottom: 15px;
-    //font-size: 20px;
+    margin-bottom: 15px; 
 `;
 
 const Avatar = styled.img`
@@ -87,25 +82,18 @@ const Avatar = styled.img`
     margin-right: 15px;
 `;
 
-const TextArea = styled.textarea`
-    //colorborder: none;
+const TextArea = styled.textarea`  
     resize: none;
     font-family: inherit;
     font-size: inherit;
     width: 600px;
     height: 125px;
     padding: 15px;
-
     border: none;    
     outline: none;
-
-   // -webkit-box-shadow: none;
-   // -moz-box-shadow: none;
-   // box-shadow: none;
 `;
 
-const Button = styled.input`
-   // float: right;
+const Button = styled.input`  
     border-radius: 20px;
     padding: 12px 17px;
     background-color: ${COLORS.primary};

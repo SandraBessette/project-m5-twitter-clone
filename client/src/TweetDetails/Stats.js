@@ -19,8 +19,7 @@ const Wrapper = styled.div`
 `;
 
 const Type = styled.span`
-    color: rgb(101, 119, 134);
-    //font-size: 14px;
+    color: rgb(101, 119, 134);  
 `;
 
 export default Stats;

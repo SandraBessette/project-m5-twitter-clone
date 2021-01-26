@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { BrowserRouter, Router, Switch, Route, useParams, useHistory } from 'react-router-dom';
+import { Router, Switch, Route, useParams, useHistory } from 'react-router-dom';
 import ProfileTop from './ProfileTop';
-import Spinner from '../Spinner';
-import Error from '../Error';
+import Spinner from '../Tools/Spinner';
+import Error from '../Tools/Error';
 import TopNavBar from './TopNavBar';
 import Media from './Media';
 import Likes from './Likes';
@@ -17,25 +17,25 @@ const Profile = () => {
   const [profileInfo, setProfileInfo] = useState(null);
   const [statusProfile, setStatusProfile] = useState("loading");
   const [statusFeed, setStatusFeed] = useState("loading");
-  const history = useHistory();
+  const history = useHistory(); 
  
   useEffect(() => {        
     setStatusProfile("loading");   
     fetch(`/api/${profileId}/profile`)
     .then((res) => res.json())
-    .then((json) => {      
-        const { error } = json;
+    .then((json) => {     
         if (json && json.profile){
           setProfileInfo({...json});
-          setStatusProfile("idle");
-          console.log('ProfileInfo fect');
+          setStatusProfile("idle");      
         }
-        else if (error) {
-          console.log('profileerror', error);
-          setStatusProfile(error);
+        else {      
+          setStatusProfile('error');
         }    
-    });
-  }   , [profileId]);
+    })
+    .catch(()=>{
+      setStatusProfile('error');
+    })
+  } , [profileId]);
 
 
   useEffect(() => {   
@@ -43,36 +43,43 @@ const Profile = () => {
     fetch(`/api/${profileId}/feed`)
     .then((res) => res.json())
     .then((json) => {
-        if(json){
-          console.log('Profile feed fecht', json);
+        if(json){        
           setProfileTweets({...json});
-          setStatusFeed("idle");     
+          setStatusFeed('idle');     
         } 
-    })       
+        else
+          setStatusFeed('error');
+    })  
+    .catch(()=>{
+      setStatusFeed('error');
+    })     
   } , [profileId]);
 
-  //   basename={`/${profileId}`}
+
     return ( 
-    < Router history={history}>    
+    
+    < Router history={history}>       
       <Wrapper>
-        { (statusProfile !== 'loading' && statusProfile !== 'idle') && <Error message={statusProfile}/>}      
-        { (statusProfile === 'loading' || statusFeed === "loading") && <Spinner />}
-        { (statusProfile === 'idle' && statusFeed === "idle") &&
-        <>
-          <ProfileTop profileInfo={profileInfo.profile} /> 
-          <TopNavBar profileId={profileId}/>
-          <Switch>        
-            <Route exact path={`/${profileId}/likes`}>
-              <Likes/>
-            </Route>
-            <Route path={`/${profileId}/media`}>
-              <Media />
-            </Route>
-            <Route exact path={`/${profileId}`}>
-              <ProfileFeed profileTweets={profileTweets}/>
-            </Route>
-          </Switch>          
-       </> }         
+        { (statusProfile === 'error' || statusFeed === "error") ? <Error /> : 
+        <>     
+          { (statusProfile === 'loading' || statusFeed === "loading") && <Spinner />}
+          { (statusProfile === 'idle' && statusFeed === "idle") &&
+          <>
+            <ProfileTop profileInfo={profileInfo.profile} /> 
+            <TopNavBar profileId={profileId}/>
+            <Switch>        
+              <Route exact path={`/${profileId}/likes`}>
+                <Likes/>
+              </Route>
+              <Route path={`/${profileId}/media`}>
+                <Media />
+              </Route>
+              <Route exact path={`/${profileId}`}>
+                <ProfileFeed profileTweets={profileTweets}/>
+              </Route>
+            </Switch>          
+          </> } 
+       </> }       
     </Wrapper>  
    </Router>  
      

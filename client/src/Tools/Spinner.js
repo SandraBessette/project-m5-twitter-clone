@@ -23,7 +23,6 @@ const spin = keyframes`
 const Wrapper = styled.div`
     display: flex;
     justify-content: center;
-   // align-items: center;
     margin-top: 10%; 
     width: 100%; 
     

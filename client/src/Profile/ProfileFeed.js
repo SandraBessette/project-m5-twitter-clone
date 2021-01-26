@@ -1,24 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Tweet from '../Tweet/Tweet';
 
 
-
-const ProfileFeed = ({profileTweets}) => {
-    /*const [profileTweets, setProfileTweets] = useState(null);
-
-    useEffect(() => {   
-        setStatusFeed("loading");   
-        fetch(`/api/${profileId}/feed`)
-        .then((res) => res.json())
-        .then((json) => {
-            if(json){
-              console.log('Profile feed fecht', json);
-              setProfileTweets({...json});
-              setStatusFeed("idle");     
-            } 
-        })       
-      } , [profileId]);*/
-
+const ProfileFeed = ({profileTweets}) => {  
     return (
         <div>
             { profileTweets.tweetIds.map((tweetId)=>{ 
@@ -30,8 +14,7 @@ const ProfileFeed = ({profileTweets}) => {
                   />  
                 )
             })     
-          }         
-
+          }  
         </div>
     );
   };

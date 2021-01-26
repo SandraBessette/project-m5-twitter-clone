@@ -6,8 +6,8 @@ import { BiArrowBack } from "react-icons/bi";
 import { COLORS } from "../GlobalStyles";
 import SingleTweet from './SingleTweet';
 import Action from '../Tweet/Action';
-import Spinner from '../Spinner';
-import Error from '../Error';
+import Spinner from '../Tools/Spinner';
+import Error from '../Tools/Error';
 
 
 const TweetDetails = () => {
@@ -21,15 +21,14 @@ const TweetDetails = () => {
     fetch(`/api/tweet/${tweetId}`)
     .then((res) => res.json())
     .then((json) => {  
-        if(json){
-          console.log('detailfecht');
+        if(json){   
           setTweetDetails({...json});
-          setStatus("idle");
-         // console.log('Tweetjson', json.tweetIds);
-        }    
+          setStatus("idle");        
+        } 
+        else  
+          setStatus("error"); 
     })
-    .catch((error)=>{
-      console.log('TweetError', error);
+    .catch((error)=>{    
       setStatus("error");
     })
   } , [tweetId]);

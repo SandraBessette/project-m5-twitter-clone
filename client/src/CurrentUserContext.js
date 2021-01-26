@@ -21,11 +21,10 @@ export const CurrentUserProvider = ({ children }) => {
                 setStatus("idle"); 
               } 
           })
-          .catch((error)=>{
-            console.log('CurrentUsererror', error);
+          .catch((error)=>{   
             setStatus("error");
           })
-        }   , []);
+        } , []);
   
     return (
       <CurrentUserContext.Provider value={{ currentUser, status }}>

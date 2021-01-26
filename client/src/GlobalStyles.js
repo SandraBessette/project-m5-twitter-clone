@@ -1,12 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 
 export const COLORS = {
-    // Bright purple:
+   
     primary: "hsl(258deg, 100%, 50%)",
-    hover: 'rgba(77, 0 , 255, 0.1)',
-    lightGrey: '#E8E8E8'
+    primaryLight: 'rgba(77, 0 , 255, 0.1)',
+    lightGrey: '#E8E8E8' 
   
-    // Add more colors as needed!
   };
 
 export default createGlobalStyle`

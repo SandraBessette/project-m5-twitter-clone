@@ -7,13 +7,10 @@ import Bookmarks from './Bookmarks';
 import TweetDetails from './TweetDetails';
 import Profile from './Profile';
 import Sidebar from './Sidebar';
-import Spinner from './Spinner';
-import Error from './Error';
+import Spinner from './Tools/Spinner';
+import Error from './Tools/Error';
 import GlobalStyles from "./GlobalStyles";
 import { CurrentUserContext } from './CurrentUserContext';
-import logo from './logo.svg'; 
-
-
 
 const App = () => {
   const { status } = useContext(CurrentUserContext);
@@ -49,15 +46,14 @@ const App = () => {
     </Wrapper>
   </BrowserRouter>  );
 };
+
 const Wrapper = styled.div`
    display: flex; 
    max-width: 950px;
    box-sizing: border-box;  
    margin: 0px auto; 
    padding: 0px 20px 20px 20px;   
-
 `;
-
 
 export default App;
 
