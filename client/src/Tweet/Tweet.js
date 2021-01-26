@@ -30,23 +30,27 @@ const Tweet = ({ tweet })=> {
     const isRetweetedFrom = retweetFrom ? true : false;
     const history = useHistory();    
 
-    const onClickLink = (ev)=>{       
+    const handleClickLink = (ev)=>{       
         ev.preventDefault();
         history.push(`/${author.handle}`);
     };
-  
+
+    const handleKeyDown = (ev)=>{       
+        ev.preventDefault();       
+        if (ev.code === "Enter")
+            history.push(`/${author.handle}`);
+    }
+ 
     return (
-       <NavLinkStyle exact to={`/tweet/${id}`} activeClassName='active'>
+       <NavLinkStyle aria-label="View tweet" exact to={`/tweet/${id}`} >
             <Wrapper >
                 {isRetweetedFrom &&
                     <Retweet><AiOutlineRetweet/> {`${retweetFrom.displayName} Remeowed`}</Retweet>}
                 <WrapperContent>
                     < Avatar src={author.avatarSrc} alt="avatar" />
-                    <div>            
-                        <p>
-                            <Name onClick={onClickLink}><strong>{author.displayName}</strong></Name>
-                            <Span>{ `@${author.handle} · ${moment(timestamp).format("MMM Do")}`}</Span>
-                        </p>
+                    <div >    
+                        <Name aria-label="View Profile" tabIndex="0" onClick={handleClickLink} onKeyPress={ handleKeyDown} ><strong>{author.displayName}</strong></Name>
+                        <Handle>{ `@${author.handle} · ${moment(timestamp).format("MMM Do")}`}</Handle>                       
                         <Status>{status}</Status>
                         {isMedia &&
                         <Media src={media[0].url} alt="media" /> }
@@ -71,7 +75,8 @@ const NavLinkStyle = styled(NavLink)`
     
 `;
 
-const Name = styled.span`
+const Name = styled.div`
+    display:inline-block;
     &:hover {
         text-decoration: underline;
     }
@@ -101,13 +106,13 @@ const Media = styled.img`
     object-fit: cover;
     border-radius: 20px; 
 `;
-const Span = styled.span`
+const Handle = styled.span`
     color: gray;
     font-size: 14px;
-    margin-left: 5px;
+    margin-left: 7px;
 `;
 
-const Retweet = styled(Span)`
+const Retweet = styled(Handle)`
     margin-left: 40px;
 `;
 

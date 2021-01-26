@@ -6,12 +6,9 @@ import { CurrentUserContext } from './CurrentUserContext';
 import { ReactComponent as Logo } from "./assets/logo.svg";
 import { FiHome, FiUser, FiBell, FiBookmark } from "react-icons/fi";
 import { COLORS } from "./GlobalStyles";
-//`/${currentUser.profile.handle}`
 
 const Sidebar = ()=>{   
     const { currentUser } = useContext(CurrentUserContext);
- 
-
 
     return (
         <Wrapper> 

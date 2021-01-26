@@ -1,24 +1,11 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { FiMessageCircle, FiRepeat, FiHeart, FiShare } from "react-icons/fi";
 
 import Action from './Action';
 
 
-const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, handleToggleLike})=>{
-    
-    //console.log('id and numLikes', {is, numOfLikes});
-    const componentsJustMounted = useRef(true);
-
-    useEffect(() => {     
-       // console.log('useEffect')  ; 
-        if(componentsJustMounted){
-          //  console.log('componentsJustMounted')  ; 
-            componentsJustMounted.current= false;
-        }
-      } , []);
-
-   
+const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, handleToggleLike})=>{ 
 
     const handleLikeClick =(ev)=>{
         console.log('isLiked', isLiked);
@@ -33,11 +20,9 @@ const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, handleToggl
         })
             .then((res) => res.json())
             .then((json) => {
-                if(json && json.success) {
-                   
-                    console.log('testkkk', json);
+                if (json && json.success) {
                     handleToggleLike();  
-                    } 
+                } 
             });
     };  
 
@@ -64,9 +49,6 @@ const ActionBar = ({id, numLikes, numRetweets, isLiked, isRetweeted, handleToggl
         </Wrapper>
     );
 };
-
-const Span = styled.span`
-`;
 
 const Wrapper = styled.div`
   display: flex;

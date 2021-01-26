@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ActionBar from '../Tweet/ActionBar';
 import Stats from './Stats';
 import useLikes from '../hooks/use-Likes.hook';
@@ -23,22 +23,15 @@ const SingleTweet = ({ tweet })=> {
     } = tweet;
 
     const [isLikedState, numLikesState, handleToggleLike] = useLikes(isLiked, numLikes); 
-
-    const history = useHistory(); 
+    
     const isMedia = media.length !== 0 && media[0].type === 'img' ? true : false;
-    const isRetweetedFrom = retweetFrom ? true : false;
-
-    const onClickLink = (ev)=>{       
-        ev.preventDefault();
-        history.push(`/${author.handle}`);
-    };
-
+    const isRetweetedFrom = retweetFrom ? true : false;    
     return (                 
             <WrapperContent>
                 <Top>
                     < Avatar src={author.avatarSrc} alt="avatar" />
                     <Identification>
-                        <p><Name onClick={onClickLink}><strong>{author.displayName}</strong></Name></p>
+                        <LinkStyled aria-label="View profile" exact to={`/${author.handle}`}><strong>{author.displayName}</strong></LinkStyled>
                         <Handle >{`@${author.handle}`}</Handle >
                     </Identification>
                 </Top>
@@ -69,8 +62,7 @@ const SingleTweet = ({ tweet })=> {
 };
 
 const Top = styled.div`
-    display: flex;
-   // cursor: pointer;  
+    display: flex;  
 `;
 
 const Identification = styled.div`
@@ -79,9 +71,11 @@ const Identification = styled.div`
     justify-content:center; 
 `;
 
-const Name = styled.span`
-    &:hover {
-        cursor: pointer;  
+const LinkStyled = styled(NavLink)`
+    text-decoration: none;
+    color: black;
+
+    &:hover {        
         text-decoration: underline;
     }
 `;
@@ -89,6 +83,7 @@ const Name = styled.span`
 const Handle = styled.p`
     color: grey;
     font-size: 14px;  
+    margin: 4px 0;
 `;
 
 const Date = styled.p`
