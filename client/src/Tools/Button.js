@@ -4,10 +4,8 @@ import { COLORS } from "../GlobalStyles";
 
 
 const Button = ({color, fill, border, children })=>{
-    return (
-        <>
-        <ButtonStyled color={color} fill={fill} >{children}</ButtonStyled>
-        </>
+    return (       
+        <ButtonStyled color={color} fill={fill} >{children}</ButtonStyled>        
     );
 
 };

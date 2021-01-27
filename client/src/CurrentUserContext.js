@@ -14,14 +14,16 @@ export const CurrentUserProvider = ({ children }) => {
           setStatus("loading");   
           fetch('api/me/profile')
           .then((res) => res.json())
-          .then((json) => {
-              console.log('MainProfileFecht');             
+          .then((json) => {                        
               if (json){
                 setCurrentUser({...json});
                 setStatus("idle"); 
               } 
+              else {
+                setStatus("error");
+              }
           })
-          .catch((error)=>{   
+          .catch(()=>{   
             setStatus("error");
           })
         } , []);

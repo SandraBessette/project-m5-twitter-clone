@@ -12,7 +12,7 @@ const HomeFeed = () => {
   const { currentUser } = useContext(CurrentUserContext);
   const [homeFeedTweets, setHomeFeedTweets] = useState(null);
 
-  const [status, setStatus] = React.useState("loading"); 
+  const [status, setStatus] = useState("loading"); 
 
   const handleErrorStatus = ()=>{  
     setStatus("error");
@@ -30,7 +30,7 @@ const HomeFeed = () => {
         else
           handleErrorStatus(); 
     })
-    .catch((error)=>{    
+    .catch(()=>{    
       handleErrorStatus();
     })
   }, []);
@@ -59,7 +59,7 @@ const HomeFeed = () => {
             return (
               <Tweet 
                 key={tweetId}
-                tweet={tweet}  
+                tweet={tweet}   
                 />         
               
             );

@@ -11,12 +11,12 @@ import ProfileFeed from './ProfileFeed';
 import { COLORS } from "../GlobalStyles";
 
 
-const Profile = () => {
-  const { profileId } = useParams();
+const Profile = () => { 
   const [profileTweets, setProfileTweets] = useState(null);
   const [profileInfo, setProfileInfo] = useState(null);
   const [statusProfile, setStatusProfile] = useState("loading");
   const [statusFeed, setStatusFeed] = useState("loading");
+  const { profileId } = useParams();
   const history = useHistory(); 
  
   useEffect(() => {        

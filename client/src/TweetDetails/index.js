@@ -10,10 +10,10 @@ import Spinner from '../Tools/Spinner';
 import Error from '../Tools/Error';
 
 
-const TweetDetails = () => {
-  const { tweetId } = useParams();
+const TweetDetails = () => { 
   const [tweetDetails, setTweetDetails] = useState(null);
   const [status, setStatus] = useState("loading");
+  const { tweetId } = useParams();
   const history = useHistory(); 
 
   useEffect(() => {  
@@ -28,7 +28,7 @@ const TweetDetails = () => {
         else  
           setStatus("error"); 
     })
-    .catch((error)=>{    
+    .catch(()=>{    
       setStatus("error");
     })
   } , [tweetId]);
